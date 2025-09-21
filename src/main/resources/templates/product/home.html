@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>RELSB Mobile | Inicio</title>
+    <title>Mundo Mobile | Inicio</title>
 
-    <!-- Estilos simples y claros (solo front) -->
+    <!-- Estilos simples y claros -->
     <style>
         body{
             background: linear-gradient(180deg, #f8fafc, #eef2ff);
@@ -13,16 +13,11 @@
             display: flex;
             flex-direction: column;
         }
-        .navbar{
-            background: #0f172a !important;
-        }
-        .navbar .navbar-brand{
-            font-weight: 700;
-            letter-spacing: .5px;
-        }
-        .container{
-            max-width: 1100px;
-        }
+        .navbar{ background: #0f172a !important; }
+        .navbar .navbar-brand{ font-weight: 700; letter-spacing: .5px; }
+        .container{ max-width: 1100px; }
+
+        /* Hero */
         .hero{
             background: #ffffff;
             border: 1px solid #e5e7eb;
@@ -30,55 +25,27 @@
             box-shadow: 0 8px 24px rgba(0,0,0,.06);
             padding: 2rem;
         }
-        .hero h1{
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: .5rem;
+        .hero h1{ font-size: 2rem; font-weight: 800; margin-bottom: .5rem; }
+        .hero p.lead{ color: #6b7280; margin-bottom: 1.25rem; }
+        .btn-rounded{ border-radius: 999px; font-weight: 700; padding: .75rem 1.25rem; }
+        .btn-success{ border-radius: 999px; font-weight: 700; padding: .75rem 1.25rem; }
+
+        /* Panel productos */
+        .panel{
+            background:#ffffff;
+            border:1px solid #e5e7eb;
+            border-radius:16px;
+            box-shadow:0 8px 24px rgba(0,0,0,.06);
+            padding:1rem;
         }
-        .hero p.lead{
-            color: #6b7280;
-            margin-bottom: 1.25rem;
-        }
-        .btn-rounded{
-            border-radius: 999px;
-            font-weight: 700;
-            padding: .75rem 1.25rem;
-        }
-        .btn-success{
-            border-radius: 999px;
-            font-weight: 700;
-            padding: .75rem 1.25rem;
-        }
-        .features{
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-        .feature{
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-        }
-        .feature h3{
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-top: .5rem;
-            margin-bottom: .25rem;
-        }
-        .feature p{
-            color: #6b7280;
-            font-size: .95rem;
-            margin: 0;
-        }
-        footer{
-            margin-top: auto;
-            color: #6b7280;
-            font-size: .9rem;
-        }
+        .display-4{ font-size:1.6rem; font-weight:800; margin:0; }
+        .table thead.table-dark{ background:#111827 !important; }
+        .table{ background:#fff; border-radius:12px; overflow:hidden; }
+        .btn-warning.btn-sm, .btn-danger.btn-sm{ border-radius:999px; padding:.35rem .7rem; font-weight:600; }
+
+        footer{ margin-top: auto; color: #6b7280; font-size: .9rem; }
+
         @media (max-width: 768px){
-            .features{ grid-template-columns: 1fr; }
             .hero{ padding: 1.25rem; }
         }
     </style>
@@ -92,6 +59,7 @@
 </nav>
 
 <main class="container my-5">
+
     <!-- Hero / bienvenida -->
     <section class="hero mb-4">
         <div class="row align-items-center">
@@ -102,21 +70,16 @@
                 </p>
 
                 <div class="d-flex gap-2 flex-wrap">
-                    <!-- Ver productos (lista) -->
-                    <a href="/" class="btn btn-primary btn-rounded">Ver productos</a>
-
-                    <!-- Agregar producto (solo si no es ROLE_USER) -->
-                    <a th:if="${role != 'ROLE_USER'}" class="btn btn-success"
-                       th:href="@{/add-product}">Agregar celular</a>
+                    <a href="#" class="btn btn-primary btn-rounded">Ver productos</a>
+                    <a th:if="${role != 'ROLE_USER'}" class="btn btn-success" th:href="@{/add-product}">Agregar celular</a>
                 </div>
             </div>
 
             <div class="col-lg-5 mt-4 mt-lg-0">
-                <!-- Tarjeta simple de “recordatorio” -->
                 <div class="p-3 border rounded-3 bg-white">
                     <h5 class="mb-2">Consejo rápido</h5>
                     <p class="mb-2 text-muted">
-                        Mantén la descripción corta con lo esencial: pantalla, memoria, cámara y batería.
+                        Mantén la descripción con lo esencial: pantalla, memoria, cámara y batería.
                     </p>
                     <ul class="mb-0 text-muted small">
                         <li>Ej.: “AMOLED 6.5”, 8/256 GB, 50 MP, 5000 mAh”.</li>
@@ -127,22 +90,48 @@
         </div>
     </section>
 
-    <!-- Beneficios / secciones rápidas -->
-    <section class="features">
-        <div class="feature">
-            <div style="font-size:1.4rem;">📱</div>
-            <h3>Catálogo claro</h3>
-            <p>Encuentra rápido cada modelo y su categoría.</p>
+    <!-- Tabla de productos -->
+    <section class="panel">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="display-4 text-primary">PRODUCTOS</h1>
+            <div th:if="${role != 'ROLE_USER'}">
+                <a class="btn btn-success" th:href="@{/add-product}">Agregar Producto</a>
+            </div>
         </div>
-        <div class="feature">
-            <div style="font-size:1.4rem;">💵</div>
-            <h3>Precios al día</h3>
-            <p>Actualiza montos en segundos con el formulario.</p>
-        </div>
-        <div class="feature">
-            <div style="font-size:1.4rem;">📦</div>
-            <h3>Stock real</h3>
-            <p>Evita quiebres controlando inventario disponible.</p>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                    <th>Descripción</th>
+                    <th class="text-center" th:if="${role != 'ROLE_USER'}">Opciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.category.name}"></td>
+                    <td th:text="${product.stock}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td class="text-center" th:if="${role != 'ROLE_USER'}">
+                        <div class="d-inline-flex gap-2">
+                            <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-warning btn-sm">Editar</a>
+                            <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post"
+                                  onsubmit="return confirm('Seguro que deseas eliminar el producto?');">
+                                <button class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 </main>
