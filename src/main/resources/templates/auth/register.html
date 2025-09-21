@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>RELSB Mobile | Crear cuenta</title>
+
+    <!-- Estilos simples -->
+    <style>
+        body{
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(180deg, #f8fafc, #eef2ff);
+        }
+        .auth-card{
+            width: 100%;
+            max-width: 420px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.06);
+            overflow: hidden;
+        }
+        .auth-header{
+            background: #0f172a;
+            color: #fff;
+            padding: 1rem 1.25rem;
+        }
+        .auth-header h1{
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0;
+        }
+        .auth-header small{
+            opacity: .85;
+        }
+        .auth-body{
+            padding: 1.25rem;
+        }
+        .form-control{
+            border-radius: 10px;
+        }
+        .form-control:focus{
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 .2rem rgba(59,130,246,.15);
+        }
+        .btn-dark{
+            border-radius: 999px;
+            font-weight: 700;
+            padding: .6rem 1rem;
+        }
+        .sub{
+            text-align: center;
+            color: #6b7280;
+            font-size: .95rem;
+        }
+        .sub a{
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .brand{
+            text-align: center;
+            margin-bottom: .5rem;
+            color: #0f172a;
+            font-weight: 800;
+            letter-spacing: .5px;
+        }
+        .form-text{ color:#6b7280; }
+    </style>
+</head>
+<body>
+<form th:action="@{/register}" th:object="${user}" method="post" class="w-100 px-3">
+    <div class="auth-card mx-auto">
+        <div class="auth-header">
+            <h1>Mundo Mobile</h1>
+            <small>Crea tu cuenta para gestionar el catálogo de celulares</small>
+        </div>
+
+        <div class="auth-body d-flex flex-column gap-2">
+            <div class="brand">Crear cuenta</div>
+            <h6 class="text-muted mb-2">Nuevo usuario</h6>
+
+            <input th:field="*{username}" type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" required>
+            <div class="form-text">Usa un nombre fácil de recordar.</div>
+
+            <input th:field="*{password}" type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" required>
+            <div class="form-text">Mínimo 8 caracteres recomendados.</div>
+
+            <input th:field="*{email}" type="email" class="form-control" placeholder="Correo electrónico" aria-label="Email" required>
+
+            <input th:field="*{date}" type="text" class="form-control" placeholder="Fecha (AAAA-MM-DD)" aria-label="Fecha">
+            <div class="form-text">Formato sugerido: 2025-09-21.</div>
+
+            <!-- Mensaje del backend (sin tocar condición) -->
+            <div class="alert alert-danger mb-0" role="alert" th:if="${param.duplicate}">
+                El usuario ya se encuentra registrado
+            </div>
+
+            <button type="submit" class="btn btn-dark mt-2">Registrarme</button>
+        </div>
+    </div>
+
+    <div class="mt-3 sub">
+        ¿Ya tienes cuenta?
+        <a th:href="@{/login}" class="text-dark">Inicia sesión ahora</a>
+    </div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

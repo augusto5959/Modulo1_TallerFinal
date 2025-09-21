@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>RELSB Mobile | Inicio</title>
+
+    <!-- Estilos simples y claros (solo front) -->
+    <style>
+        body{
+            background: linear-gradient(180deg, #f8fafc, #eef2ff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar{
+            background: #0f172a !important;
+        }
+        .navbar .navbar-brand{
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+        .container{
+            max-width: 1100px;
+        }
+        .hero{
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.06);
+            padding: 2rem;
+        }
+        .hero h1{
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: .5rem;
+        }
+        .hero p.lead{
+            color: #6b7280;
+            margin-bottom: 1.25rem;
+        }
+        .btn-rounded{
+            border-radius: 999px;
+            font-weight: 700;
+            padding: .75rem 1.25rem;
+        }
+        .btn-success{
+            border-radius: 999px;
+            font-weight: 700;
+            padding: .75rem 1.25rem;
+        }
+        .features{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .feature{
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .feature h3{
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-top: .5rem;
+            margin-bottom: .25rem;
+        }
+        .feature p{
+            color: #6b7280;
+            font-size: .95rem;
+            margin: 0;
+        }
+        footer{
+            margin-top: auto;
+            color: #6b7280;
+            font-size: .9rem;
+        }
+        @media (max-width: 768px){
+            .features{ grid-template-columns: 1fr; }
+            .hero{ padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/" style="font-size: 1.5rem;">Mundo Mobile</a>
+        <a class="navbar-brand ms-auto" href="/logout" style="font-size: 1.2rem;">Salir</a>
+    </div>
+</nav>
+
+<main class="container my-5">
+    <!-- Hero / bienvenida -->
+    <section class="hero mb-4">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1>Tu inventario de celulares, simplificado</h1>
+                <p class="lead">
+                    Administra modelos, precios y stock de forma rápida. Actualiza tu catálogo y mantén todo al día.
+                </p>
+
+                <div class="d-flex gap-2 flex-wrap">
+                    <!-- Ver productos (lista) -->
+                    <a href="/" class="btn btn-primary btn-rounded">Ver productos</a>
+
+                    <!-- Agregar producto (solo si no es ROLE_USER) -->
+                    <a th:if="${role != 'ROLE_USER'}" class="btn btn-success"
+                       th:href="@{/add-product}">Agregar celular</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 mt-4 mt-lg-0">
+                <!-- Tarjeta simple de “recordatorio” -->
+                <div class="p-3 border rounded-3 bg-white">
+                    <h5 class="mb-2">Consejo rápido</h5>
+                    <p class="mb-2 text-muted">
+                        Mantén la descripción corta con lo esencial: pantalla, memoria, cámara y batería.
+                    </p>
+                    <ul class="mb-0 text-muted small">
+                        <li>Ej.: “AMOLED 6.5”, 8/256 GB, 50 MP, 5000 mAh”.</li>
+                        <li>Usa el precio final al público (USD).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios / secciones rápidas -->
+    <section class="features">
+        <div class="feature">
+            <div style="font-size:1.4rem;">📱</div>
+            <h3>Catálogo claro</h3>
+            <p>Encuentra rápido cada modelo y su categoría.</p>
+        </div>
+        <div class="feature">
+            <div style="font-size:1.4rem;">💵</div>
+            <h3>Precios al día</h3>
+            <p>Actualiza montos en segundos con el formulario.</p>
+        </div>
+        <div class="feature">
+            <div style="font-size:1.4rem;">📦</div>
+            <h3>Stock real</h3>
+            <p>Evita quiebres controlando inventario disponible.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="container py-4 text-center">
+    © <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> RELSB Mobile. Todos los derechos reservados.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
